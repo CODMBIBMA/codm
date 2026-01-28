@@ -17,8 +17,8 @@ const StreamerList = () => {
         });
     }, []);
 
-    const filteredStreamers = streamers.filter(s => 
-        s.name.toLowerCase().includes(query) || 
+    const filteredStreamers = streamers.filter(s =>
+        s.name.toLowerCase().includes(query) ||
         s.tags.some(t => t.toLowerCase().includes(query))
     );
 
@@ -26,8 +26,8 @@ const StreamerList = () => {
         <div className="max-w-7xl mx-auto px-4 py-12 min-h-screen">
             <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-white/10 pb-4 gap-4">
                 <div>
-                     <h1 className="text-5xl font-display font-bold text-white uppercase tracking-tighter">
-                        Seleção de <span className="text-codm-yellow">Operador</span>
+                    <h1 className="text-5xl font-display font-bold text-white uppercase tracking-tighter">
+                        Selecione o <span className="text-codm-yellow">Streamer</span>
                     </h1>
                     <p className="text-gray-500 font-bold uppercase text-xs tracking-widest mt-2 flex items-center gap-2">
                         <Radio size={14} className="text-green-500 animate-pulse" />
@@ -35,7 +35,7 @@ const StreamerList = () => {
                     </p>
                 </div>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {loading ? (
                     <div className="col-span-full h-64 flex items-center justify-center font-display text-2xl text-codm-yellow uppercase animate-pulse">Escaneando...</div>
@@ -47,27 +47,23 @@ const StreamerList = () => {
                                 {/* Avatar Box with Video Loop support */}
                                 <div className="relative shrink-0 w-24 h-24 bg-black border border-white/10 overflow-hidden">
                                     {s.videoUrl ? (
-                                        <video 
-                                            src={s.videoUrl} 
-                                            autoPlay 
-                                            loop 
-                                            muted 
-                                            playsInline 
+                                        <video
+                                            src={s.videoUrl}
+                                            autoPlay
+                                            loop
+                                            muted
+                                            playsInline
                                             className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                                         />
                                     ) : (
-                                        <img 
-                                            src={s.avatarUrl} 
-                                            alt={s.name} 
-                                            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" 
+                                        <img
+                                            src={s.avatarUrl}
+                                            alt={s.name}
+                                            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
                                         />
                                     )}
-                                    {/* Level Badge Mockup */}
-                                    <div className="absolute -bottom-2 -right-2 bg-codm-yellow text-black text-[10px] font-bold px-1.5 py-0.5 skew-x-[-10deg] z-10">
-                                        <span className="skew-x-[10deg]">LVL 150</span>
-                                    </div>
                                 </div>
-                                
+
                                 {/* Info */}
                                 <div className="flex-1 min-w-0 flex flex-col justify-center">
                                     <h3 className="text-3xl font-display font-bold text-white uppercase leading-none tracking-wide group-hover:text-codm-yellow truncate transition-colors">{s.name}</h3>
