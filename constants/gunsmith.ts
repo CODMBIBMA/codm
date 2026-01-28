@@ -472,6 +472,16 @@ export const GUNSMITH_ATTACHMENTS: Attachment[] = [
         positiveEffects: ['Damage', 'Damage Range'], negativeEffects: ['Vertical Recoil Control', 'ADS Speed'],
         modifiers: { damage: 15, range: 10, verticalRecoil: -10, adsSpeed: -8 }
     },
+    {
+        id: 'ak117_ammo_ext_40', name: '40 Round Extended Mag', slot: 'ammo', isUniversal: false, compatibleWeapons: ['ak117'],
+        positiveEffects: ['Magazine Capacity'], negativeEffects: ['Movement Speed', 'Reload Speed'],
+        modifiers: { movementSpeed: -1 }
+    },
+    {
+        id: 'ak117_ammo_ext_48', name: '48 Round Extended Mag', slot: 'ammo', isUniversal: false, compatibleWeapons: ['ak117'],
+        positiveEffects: ['Magazine Capacity'], negativeEffects: ['Movement Speed', 'Reload Speed', 'ADS Speed'],
+        modifiers: { movementSpeed: -2, adsSpeed: -3 }
+    },
 
     // --- AMMO (HS0405 SPECIFIC) ---
     {

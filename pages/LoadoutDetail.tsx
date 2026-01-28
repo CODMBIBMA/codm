@@ -7,11 +7,66 @@ import { Copy, Check, Info, Shield, Zap, Crosshair, ArrowLeft, ChevronRight, Tre
 import { GUNSMITH_ATTACHMENTS, CATEGORY_BASE_STATS } from '../constants/gunsmith';
 import { Attachment, WeaponStats } from '../types';
 
+// --- OPTIMIZED COMPONENTS ---
+
+// Moving component definition outside to prevent recreation on every render
+const GunsmithSlot = React.memo(({ label, value }: { label: string, value?: string }) => {
+    const hasAttachment = !!value;
+    const attData = hasAttachment ? GUNSMITH_ATTACHMENTS.find(a => a.name === value) : null;
+
+    return (
+        <div className="flex flex-col group mb-4">
+            <div className="flex items-center">
+                {/* Linha de conexão */}
+                <div className={`w-4 h-[2px] mr-2 transition-colors ${hasAttachment ? 'bg-codm-yellow' : 'bg-gray-800'}`}></div>
+
+                <div className={`flex-1 p-3 border-l-2 transition-all relative overflow-hidden ${hasAttachment ? 'bg-white/[0.03] border-codm-yellow' : 'bg-transparent border-gray-800 opacity-50'}`}>
+                    {hasAttachment && <div className="absolute top-0 right-0 w-2 h-2 bg-codm-yellow"></div>}
+                    <div className="flex justify-between items-center mb-1">
+                        <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{label}</span>
+                        {hasAttachment && <div className="w-1.5 h-1.5 rounded-full bg-codm-yellow shadow-[0_0_5px_#fbbf24]"></div>}
+                    </div>
+                    <div className={`text-xl font-display font-bold uppercase tracking-wide truncate ${hasAttachment ? 'text-white' : 'text-gray-600'}`}>
+                        {value || 'Vazio'}
+                    </div>
+                </div>
+            </div>
+
+            {/* Effects List - Prioritized as per user request */}
+            {attData && (
+                <div className="ml-6 mt-2 space-y-1.5">
+                    {attData.positiveEffects.map(e => (
+                        <div key={e} className="flex items-start gap-2 bg-green-500/5 px-2 py-1 rounded-sm border border-green-500/10">
+                            <TrendingUp size={12} className="text-green-500 mt-0.5" />
+                            <span className="text-[10px] text-green-500 font-bold uppercase leading-tight">{e}</span>
+                        </div>
+                    ))}
+                    {attData.negativeEffects.map(e => (
+                        <div key={e} className="flex items-start gap-2 bg-red-500/5 px-2 py-1 rounded-sm border border-red-500/10">
+                            <TrendingDown size={12} className="text-red-500 mt-0.5" />
+                            <span className="text-[10px] text-red-500 font-bold uppercase leading-tight">{e}</span>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+});
+
 const LoadoutDetail = () => {
     const { slug, weaponSlug } = useParams<{ slug: string; weaponSlug: string }>();
     const [loadout, setLoadout] = useState<LoadoutWithDetails | null>(null);
     const [loading, setLoading] = useState(true);
     const [copied, setCopied] = useState(false);
+
+    // Create a lookup map for faster attachment retrieval
+    const attachmentMap = React.useMemo(() => {
+        const map = new Map<string, Attachment>();
+        GUNSMITH_ATTACHMENTS.forEach(att => {
+            map.set(att.name, att);
+        });
+        return map;
+    }, []);
 
     useEffect(() => {
         if (!slug || !weaponSlug) return;
@@ -37,7 +92,7 @@ const LoadoutDetail = () => {
         const current = { ...base };
         const activeAttachments = Object.values(loadout.attachments)
             .filter(Boolean)
-            .map(name => GUNSMITH_ATTACHMENTS.find(a => a.name === name))
+            .map(name => attachmentMap.get(name as string))
             .filter(Boolean) as Attachment[];
 
         activeAttachments.forEach(att => {
@@ -58,79 +113,10 @@ const LoadoutDetail = () => {
         };
 
         return { current, diffs };
-    }, [loadout]);
+    }, [loadout, attachmentMap]);
 
     if (loading) return <div className="h-screen flex items-center justify-center font-display text-2xl text-white uppercase tracking-widest animate-pulse">Carregando Gunsmith...</div>;
     if (!loadout) return <div className="h-screen flex items-center justify-center font-display text-2xl text-red-500 uppercase">Erro de Acesso</div>;
-
-    // Componente de Slot estilo Gunsmith (Lista lateral)
-    const GunsmithSlot = ({ label, value }: { label: string, value?: string }) => {
-        const hasAttachment = !!value;
-        const attData = hasAttachment ? GUNSMITH_ATTACHMENTS.find(a => a.name === value) : null;
-
-        return (
-            <div className="flex flex-col group mb-3">
-                <div className="flex items-center">
-                    {/* Linha de conexão */}
-                    <div className={`w-4 h-[2px] mr-2 transition-colors ${hasAttachment ? 'bg-codm-yellow' : 'bg-gray-800'}`}></div>
-
-                    <div className={`flex-1 p-2 border-l-2 transition-all relative overflow-hidden ${hasAttachment ? 'bg-white/5 border-codm-yellow' : 'bg-transparent border-gray-800 opacity-50'}`}>
-                        {hasAttachment && <div className="absolute top-0 right-0 w-2 h-2 bg-codm-yellow"></div>}
-                        <div className="flex justify-between items-center">
-                            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{label}</span>
-                            {hasAttachment && <div className="w-1.5 h-1.5 rounded-full bg-codm-yellow shadow-[0_0_5px_#fbbf24]"></div>}
-                        </div>
-                        <div className={`text-lg font-display font-bold uppercase tracking-wide truncate ${hasAttachment ? 'text-white' : 'text-gray-600'}`}>
-                            {value || 'Nenhum'}
-                        </div>
-                    </div>
-                </div>
-
-                {/* Effects List */}
-                {attData && (
-                    <div className="ml-6 mt-1 flex flex-wrap gap-x-3 gap-y-1">
-                        {attData.positiveEffects.map(e => (
-                            <span key={e} className="text-[10px] text-green-500 font-bold uppercase flex items-center gap-1">
-                                <TrendingUp size={10} /> {e}
-                            </span>
-                        ))}
-                        {attData.negativeEffects.map(e => (
-                            <span key={e} className="text-[10px] text-red-500 font-bold uppercase flex items-center gap-1">
-                                <TrendingDown size={10} /> {e}
-                            </span>
-                        ))}
-                    </div>
-                )}
-            </div>
-        );
-    };
-
-    const DetailStatBar = ({ label, value, diff }: { label: string, value: number, diff: number }) => (
-        <div className="flex flex-col">
-            <div className="flex justify-between items-center mb-1">
-                <span className="text-[10px] text-gray-500 uppercase font-bold">{label}</span>
-                <div className="flex items-center gap-1">
-                    {diff !== 0 && (
-                        <span className={`text-[9px] font-bold ${diff > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                            {diff > 0 ? `+${diff}` : diff}
-                        </span>
-                    )}
-                    <span className="text-xs font-mono font-bold text-white tracking-tighter">{Math.round(value)}</span>
-                </div>
-            </div>
-            <div className="w-full h-1 bg-gray-800 relative overflow-hidden">
-                <div className="absolute top-0 left-0 h-full bg-white transition-all duration-500" style={{ width: `${Math.min(value, 100)}%` }}></div>
-                {diff > 0 && (
-                    <div className="absolute top-0 h-full bg-green-500 transition-all duration-500"
-                        style={{ left: `${value - diff}%`, width: `${diff}%` }}></div>
-                )}
-                {diff < 0 && (
-                    <div className="absolute top-0 h-full bg-red-500 transition-all duration-500"
-                        style={{ left: `${value}%`, width: `${Math.abs(diff)}%` }}></div>
-                )}
-            </div>
-        </div>
-    );
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-6">
@@ -157,7 +143,7 @@ const LoadoutDetail = () => {
                 {/* Left Column: Weapon Model & Stats (7 cols) */}
                 <div className="lg:col-span-7 flex flex-col gap-6">
                     {/* Visual da Arma */}
-                    <div className="relative border border-white/5 bg-gradient-to-b from-gray-900 to-black p-1 rounded-sm shadow-2xl">
+                    <div className="relative border border-white/5 bg-gradient-to-b from-gray-900 to-black p-1 rounded-sm shadow-2xl overflow-hidden aspect-video flex items-center justify-center">
                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-codm-yellow/50 to-transparent"></div>
                         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10"></div>
 
@@ -169,19 +155,7 @@ const LoadoutDetail = () => {
                             videos={loadout.weapon.videos}
                         />
 
-                        {/* Stats Overlay */}
-                        <div className="absolute bottom-4 left-4 right-4 grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-4 z-20">
-                            {statsResult.current && (
-                                <>
-                                    <DetailStatBar label="Dano" value={statsResult.current.damage} diff={statsResult.diffs!.damage} />
-                                    <DetailStatBar label="Alcance" value={statsResult.current.range} diff={statsResult.diffs!.range} />
-                                    <DetailStatBar label="Precisão" value={statsResult.current.accuracy} diff={statsResult.diffs!.accuracy} />
-                                    <DetailStatBar label="Cadência" value={statsResult.current.fireRate} diff={statsResult.diffs!.fireRate} />
-                                    <DetailStatBar label="Mobilidade" value={statsResult.current.mobility} diff={statsResult.diffs!.mobility} />
-                                    <DetailStatBar label="Controle" value={statsResult.current.control} diff={statsResult.diffs!.control} />
-                                </>
-                            )}
-                        </div>
+                        {/* Stats Overlay Removed */}
                     </div>
 
                     {/* Action Bar (Code & Equip) */}

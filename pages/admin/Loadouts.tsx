@@ -28,10 +28,12 @@ const SelectInput = ({
 
     return (
         <div className="bg-black/30 p-2 border border-white/10 group hover:border-codm-yellow/30 transition-colors">
-            <label className="text-[10px] text-gray-500 uppercase font-bold block mb-1 group-hover:text-codm-yellow transition-colors flex justify-between items-center">
-                <span>{label}</span>
+            <div className="flex justify-between items-center mb-1">
+                <label className="text-[10px] text-gray-500 uppercase font-bold block group-hover:text-codm-yellow transition-colors">
+                    {label}
+                </label>
                 {isMod && val && <img src={imgPath} alt="" className="h-4 w-4 object-contain opacity-50 group-hover:opacity-100 transition-opacity" onError={e => (e.target as any).style.display = 'none'} />}
-            </label>
+            </div>
             <div className="relative">
                 <select
                     className="w-full bg-transparent text-white font-display text-lg uppercase focus:outline-none appearance-none cursor-pointer pr-6"
@@ -41,20 +43,27 @@ const SelectInput = ({
                     <option value="" className="bg-codm-panel text-gray-500">Nenhum</option>
                     {options.map(opt => {
                         const name = typeof opt === 'string' ? opt : opt.name;
-                        return <option key={name} value={name} className="bg-codm-panel text-white">{name}</option>
+                        const weaponSuffix = (typeof opt !== 'string' && !opt.isUniversal && opt.compatibleWeapons?.[0]) ? ` (${opt.compatibleWeapons[0]})` : '';
+                        return <option key={name} value={name} className="bg-codm-panel text-white">{name}{weaponSuffix}</option>
                     })}
                 </select>
                 <ChevronDown size={14} className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
             </div>
 
-            {/* Effect Preview for Attachments */}
+            {/* Effects List for Attachments */}
             {!isMod && selectedAttachment && (
-                <div className="mt-1 flex flex-wrap gap-1">
-                    {selectedAttachment.positiveEffects.slice(0, 2).map(e => (
-                        <span key={e} className="text-[8px] text-green-500 font-bold uppercase leading-none">+{e}</span>
+                <div className="mt-2 flex flex-col gap-1 border-t border-white/5 pt-2">
+                    {selectedAttachment.positiveEffects.map(e => (
+                        <div key={e} className="flex items-center gap-1">
+                            <div className="w-1 h-1 bg-green-500 rounded-full"></div>
+                            <span className="text-[9px] text-green-500 font-bold uppercase leading-none">{e}</span>
+                        </div>
                     ))}
-                    {selectedAttachment.negativeEffects.slice(0, 1).map(e => (
-                        <span key={e} className="text-[8px] text-red-500 font-bold uppercase leading-none">-{e}</span>
+                    {selectedAttachment.negativeEffects.map(e => (
+                        <div key={e} className="flex items-center gap-1">
+                            <div className="w-1 h-1 bg-red-500 rounded-full"></div>
+                            <span className="text-[9px] text-red-500 font-bold uppercase leading-none">{e}</span>
+                        </div>
                     ))}
                 </div>
             )}
@@ -62,34 +71,7 @@ const SelectInput = ({
     );
 };
 
-const StatBar = ({ label, value, diff }: { label: string, value: number, diff: number }) => {
-    return (
-        <div className="mb-2">
-            <div className="flex justify-between items-end mb-1">
-                <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{label}</span>
-                <div className="flex items-center gap-1">
-                    {diff !== 0 && (
-                        <span className={`text-[10px] font-bold ${diff > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                            {diff > 0 ? `+${diff}` : diff}
-                        </span>
-                    )}
-                    <span className="text-sm font-mono font-bold text-white">{Math.round(value)}</span>
-                </div>
-            </div>
-            <div className="h-1 bg-gray-800 relative overflow-hidden">
-                <div className="absolute top-0 left-0 h-full bg-white transition-all duration-500" style={{ width: `${Math.min(value, 100)}%` }}></div>
-                {diff > 0 && (
-                    <div className="absolute top-0 h-full bg-green-500 transition-all duration-500"
-                        style={{ left: `${value - diff}%`, width: `${diff}%` }}></div>
-                )}
-                {diff < 0 && (
-                    <div className="absolute top-0 h-full bg-red-500 transition-all duration-500"
-                        style={{ left: `${value}%`, width: `${Math.abs(diff)}%` }}></div>
-                )}
-            </div>
-        </div>
-    );
-}
+// StatBar removed - focusing on Pros/Cons
 
 const AdminLoadouts = () => {
     const [loadouts, setLoadouts] = useState<LoadoutWithDetails[]>([]);
@@ -312,21 +294,13 @@ const AdminLoadouts = () => {
                                     </select>
                                 </div>
 
-                                {/* Stat Bars */}
+                                {/* Stat Bars Removed */}
                                 <div className="bg-black/40 p-4 border border-white/5">
-                                    <label className="text-xs text-gray-500 uppercase font-bold mb-4 block">Atributos da Arma</label>
-                                    {statsResult.current ? (
-                                        <div className="space-y-1">
-                                            <StatBar label="Dano" value={statsResult.current.damage} diff={statsResult.diffs!.damage} />
-                                            <StatBar label="Precisão" value={statsResult.current.accuracy} diff={statsResult.diffs!.accuracy} />
-                                            <StatBar label="Alcance" value={statsResult.current.range} diff={statsResult.diffs!.range} />
-                                            <StatBar label="Cadência" value={statsResult.current.fireRate} diff={statsResult.diffs!.fireRate} />
-                                            <StatBar label="Mobilidade" value={statsResult.current.mobility} diff={statsResult.diffs!.mobility} />
-                                            <StatBar label="Controle" value={statsResult.current.control} diff={statsResult.diffs!.control} />
-                                        </div>
-                                    ) : (
-                                        <div className="h-40 flex items-center justify-center text-gray-600 text-xs text-center uppercase border border-dashed border-white/10">Selecione uma arma para ver os status</div>
-                                    )}
+                                    <label className="text-xs text-gray-500 uppercase font-bold mb-4 block">Filtro de Arma</label>
+                                    <p className="text-[10px] text-gray-400 uppercase leading-relaxed">
+                                        As estatísticas numéricas foram removidas para priorizar as informações qualitativas dos acessórios (Prós e Contras),
+                                        proporcionando uma visão mais fiel à jogabilidade real.
+                                    </p>
                                 </div>
 
                                 <div className="bg-black/40 p-4 border border-white/5">
