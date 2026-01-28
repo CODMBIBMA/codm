@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CODM Loadouts Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Teko:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Rajdhani', 'sans-serif'], // Fonte principal mais técnica
+              display: ['Teko', 'sans-serif'], // Fonte de títulos estilo CODM
+            },
+            colors: {
+              codm: {
+                yellow: '#fbbf24', // O Amarelo clássico do botão "INICIAR"
+                yellow_hover: '#d97706',
+                dark: '#0b0f15', // Fundo quase preto
+                panel: '#151b24', // Painéis
+                gray: '#94a3b8',
+                accent: '#3b82f6' // Azul tático para detalhes secundários
+              },
+              rarity: {
+                mythic: '#ef4444',
+                legendary: '#f59e0b',
+                epic: '#a855f7',
+                rare: '#3b82f6'
+              }
+            },
+            backgroundImage: {
+              'hex-pattern': "url('https://grainy-gradients.vercel.app/noise.svg')", // Textura de ruído para realismo
+            },
+            animation: {
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      body {
+        background-color: #0b0f15;
+        color: #e2e8f0;
+        background-image: 
+          linear-gradient(rgba(11, 15, 21, 0.95), rgba(11, 15, 21, 0.95)),
+          repeating-linear-gradient(45deg, #151b24 0, #151b24 1px, transparent 0, transparent 50%);
+        background-size: 20px 20px;
+      }
+      
+      /* Scrollbar estilo militar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0b0f15; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #334155; 
+        border: 1px solid #0b0f15;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #fbbf24; 
+      }
+
+      /* Utilitários de UI do CODM */
+      .skew-btn {
+        transform: skewX(-15deg);
+      }
+      .skew-content {
+        transform: skewX(15deg);
+      }
+      
+      .codm-panel {
+        background: linear-gradient(180deg, rgba(21, 27, 36, 0.9) 0%, rgba(11, 15, 21, 0.95) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+      }
+
+      .text-stroke {
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+      }
+
+      .clip-angled-box {
+        clip-path: polygon(
+          0 0, 
+          100% 0, 
+          100% calc(100% - 10px), 
+          calc(100% - 10px) 100%, 
+          0 100%
+        );
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.2.0",
+    "react/": "https://esm.sh/react@18.2.0/",
+    "react-dom": "https://esm.sh/react-dom@18.2.0",
+    "react-dom/": "https://esm.sh/react-dom@18.2.0/",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+    "react-router-dom": "https://esm.sh/react-router-dom@6.22.3?external=react,react-dom",
+    "recharts": "https://esm.sh/recharts@2.12.3?external=react,react-dom",
+    "lucide-react": "https://esm.sh/lucide-react@0.363.0?external=react,react-dom",
+    "framer-motion": "https://esm.sh/framer-motion@11.0.24?external=react,react-dom"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
