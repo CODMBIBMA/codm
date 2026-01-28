@@ -3,7 +3,9 @@ import { useParams } from 'react-router-dom';
 import { db } from '../services/db';
 import { LoadoutWithDetails } from '../types';
 import WeaponVisual from '../components/WeaponVisual';
-import { Copy, Check, Info, Shield, Zap, Crosshair, ArrowLeft } from 'lucide-react';
+import { Copy, Check, Info, Shield, Zap, Crosshair, ArrowLeft, ChevronRight, TrendingUp, TrendingDown } from 'lucide-react';
+import { GUNSMITH_ATTACHMENTS, CATEGORY_BASE_STATS } from '../constants/gunsmith';
+import { Attachment, WeaponStats } from '../types';
 
 const LoadoutDetail = () => {
     const { slug, weaponSlug } = useParams<{ slug: string; weaponSlug: string }>();
@@ -27,30 +29,108 @@ const LoadoutDetail = () => {
         setTimeout(() => setCopied(false), 2000);
     };
 
+    // --- Dynamic Stats Calculation ---
+    const statsResult = React.useMemo(() => {
+        if (!loadout) return { current: null, diffs: null };
+        const base = loadout.weapon.baseStats || CATEGORY_BASE_STATS[loadout.weapon.category] || CATEGORY_BASE_STATS['AR'];
+
+        const current = { ...base };
+        const activeAttachments = Object.values(loadout.attachments)
+            .filter(Boolean)
+            .map(name => GUNSMITH_ATTACHMENTS.find(a => a.name === name))
+            .filter(Boolean) as Attachment[];
+
+        activeAttachments.forEach(att => {
+            Object.entries(att.modifiers).forEach(([key, val]) => {
+                if (key in current) {
+                    (current as any)[key] += val;
+                }
+            });
+        });
+
+        const diffs = {
+            damage: current.damage - base.damage,
+            accuracy: current.accuracy - base.accuracy,
+            range: current.range - base.range,
+            fireRate: current.fireRate - base.fireRate,
+            mobility: current.mobility - base.mobility,
+            control: current.control - base.control
+        };
+
+        return { current, diffs };
+    }, [loadout]);
+
     if (loading) return <div className="h-screen flex items-center justify-center font-display text-2xl text-white uppercase tracking-widest animate-pulse">Carregando Gunsmith...</div>;
     if (!loadout) return <div className="h-screen flex items-center justify-center font-display text-2xl text-red-500 uppercase">Erro de Acesso</div>;
 
     // Componente de Slot estilo Gunsmith (Lista lateral)
     const GunsmithSlot = ({ label, value }: { label: string, value?: string }) => {
         const hasAttachment = !!value;
-        return (
-            <div className="flex items-center group mb-2">
-                {/* Linha de conexão */}
-                <div className={`w-4 h-[2px] mr-2 transition-colors ${hasAttachment ? 'bg-codm-yellow' : 'bg-gray-800'}`}></div>
+        const attData = hasAttachment ? GUNSMITH_ATTACHMENTS.find(a => a.name === value) : null;
 
-                <div className={`flex-1 p-2 border-l-2 transition-all relative overflow-hidden ${hasAttachment ? 'bg-white/5 border-codm-yellow' : 'bg-transparent border-gray-800 opacity-50'}`}>
-                    {hasAttachment && <div className="absolute top-0 right-0 w-2 h-2 bg-codm-yellow"></div>}
-                    <div className="flex justify-between items-center">
-                        <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{label}</span>
-                        {hasAttachment && <div className="w-1.5 h-1.5 rounded-full bg-codm-yellow shadow-[0_0_5px_#fbbf24]"></div>}
-                    </div>
-                    <div className={`text-lg font-display font-bold uppercase tracking-wide truncate ${hasAttachment ? 'text-white' : 'text-gray-600'}`}>
-                        {value || 'Nenhum'}
+        return (
+            <div className="flex flex-col group mb-3">
+                <div className="flex items-center">
+                    {/* Linha de conexão */}
+                    <div className={`w-4 h-[2px] mr-2 transition-colors ${hasAttachment ? 'bg-codm-yellow' : 'bg-gray-800'}`}></div>
+
+                    <div className={`flex-1 p-2 border-l-2 transition-all relative overflow-hidden ${hasAttachment ? 'bg-white/5 border-codm-yellow' : 'bg-transparent border-gray-800 opacity-50'}`}>
+                        {hasAttachment && <div className="absolute top-0 right-0 w-2 h-2 bg-codm-yellow"></div>}
+                        <div className="flex justify-between items-center">
+                            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{label}</span>
+                            {hasAttachment && <div className="w-1.5 h-1.5 rounded-full bg-codm-yellow shadow-[0_0_5px_#fbbf24]"></div>}
+                        </div>
+                        <div className={`text-lg font-display font-bold uppercase tracking-wide truncate ${hasAttachment ? 'text-white' : 'text-gray-600'}`}>
+                            {value || 'Nenhum'}
+                        </div>
                     </div>
                 </div>
+
+                {/* Effects List */}
+                {attData && (
+                    <div className="ml-6 mt-1 flex flex-wrap gap-x-3 gap-y-1">
+                        {attData.positiveEffects.map(e => (
+                            <span key={e} className="text-[10px] text-green-500 font-bold uppercase flex items-center gap-1">
+                                <TrendingUp size={10} /> {e}
+                            </span>
+                        ))}
+                        {attData.negativeEffects.map(e => (
+                            <span key={e} className="text-[10px] text-red-500 font-bold uppercase flex items-center gap-1">
+                                <TrendingDown size={10} /> {e}
+                            </span>
+                        ))}
+                    </div>
+                )}
             </div>
         );
     };
+
+    const DetailStatBar = ({ label, value, diff }: { label: string, value: number, diff: number }) => (
+        <div className="flex flex-col">
+            <div className="flex justify-between items-center mb-1">
+                <span className="text-[10px] text-gray-500 uppercase font-bold">{label}</span>
+                <div className="flex items-center gap-1">
+                    {diff !== 0 && (
+                        <span className={`text-[9px] font-bold ${diff > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                            {diff > 0 ? `+${diff}` : diff}
+                        </span>
+                    )}
+                    <span className="text-xs font-mono font-bold text-white tracking-tighter">{Math.round(value)}</span>
+                </div>
+            </div>
+            <div className="w-full h-1 bg-gray-800 relative overflow-hidden">
+                <div className="absolute top-0 left-0 h-full bg-white transition-all duration-500" style={{ width: `${Math.min(value, 100)}%` }}></div>
+                {diff > 0 && (
+                    <div className="absolute top-0 h-full bg-green-500 transition-all duration-500"
+                        style={{ left: `${value - diff}%`, width: `${diff}%` }}></div>
+                )}
+                {diff < 0 && (
+                    <div className="absolute top-0 h-full bg-red-500 transition-all duration-500"
+                        style={{ left: `${value}%`, width: `${Math.abs(diff)}%` }}></div>
+                )}
+            </div>
+        </div>
+    );
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-6">
@@ -89,20 +169,18 @@ const LoadoutDetail = () => {
                             videos={loadout.weapon.videos}
                         />
 
-                        {/* Stats Overlay Mockup */}
-                        <div className="absolute bottom-4 left-4 flex gap-4 z-20">
-                            <div className="flex flex-col">
-                                <span className="text-[10px] text-gray-500 uppercase font-bold">Dano</span>
-                                <div className="w-20 h-1 bg-gray-800"><div className="w-[80%] h-full bg-white"></div></div>
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="text-[10px] text-gray-500 uppercase font-bold">Cadência</span>
-                                <div className="w-20 h-1 bg-gray-800"><div className="w-[60%] h-full bg-white"></div></div>
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="text-[10px] text-gray-500 uppercase font-bold">Precisão</span>
-                                <div className="w-20 h-1 bg-gray-800"><div className="w-[70%] h-full bg-green-500"></div></div>
-                            </div>
+                        {/* Stats Overlay */}
+                        <div className="absolute bottom-4 left-4 right-4 grid grid-cols-3 md:grid-cols-6 gap-2 md:gap-4 z-20">
+                            {statsResult.current && (
+                                <>
+                                    <DetailStatBar label="Dano" value={statsResult.current.damage} diff={statsResult.diffs!.damage} />
+                                    <DetailStatBar label="Alcance" value={statsResult.current.range} diff={statsResult.diffs!.range} />
+                                    <DetailStatBar label="Precisão" value={statsResult.current.accuracy} diff={statsResult.diffs!.accuracy} />
+                                    <DetailStatBar label="Cadência" value={statsResult.current.fireRate} diff={statsResult.diffs!.fireRate} />
+                                    <DetailStatBar label="Mobilidade" value={statsResult.current.mobility} diff={statsResult.diffs!.mobility} />
+                                    <DetailStatBar label="Controle" value={statsResult.current.control} diff={statsResult.diffs!.control} />
+                                </>
+                            )}
                         </div>
                     </div>
 
@@ -149,7 +227,7 @@ const LoadoutDetail = () => {
                             {loadout.attachments.barrel && <GunsmithSlot label="Cano" value={loadout.attachments.barrel} />}
                             {loadout.attachments.optic && <GunsmithSlot label="Lente" value={loadout.attachments.optic} />}
                             {loadout.attachments.stock && <GunsmithSlot label="Coronha" value={loadout.attachments.stock} />}
-                            {loadout.attachments.perk && <GunsmithSlot label="Mod de Arma" value={loadout.attachments.perk} />}
+                            {loadout.attachments.perk && <GunsmithSlot label="Vantagem" value={loadout.attachments.perk} />}
                             {loadout.attachments.laser && <GunsmithSlot label="Laser" value={loadout.attachments.laser} />}
                             {loadout.attachments.underbarrel && <GunsmithSlot label="Acoplamento" value={loadout.attachments.underbarrel} />}
                             {loadout.attachments.ammo && <GunsmithSlot label="Munição" value={loadout.attachments.ammo} />}

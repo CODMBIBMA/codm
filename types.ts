@@ -12,6 +12,41 @@ export interface User {
 
 export type WeaponCategory = 'AR' | 'SMG' | 'Sniper' | 'LMG' | 'Shotgun' | 'Marksman' | 'Pistol' | 'Melee';
 
+// --- STATS SYSTEM ---
+
+export interface WeaponStats {
+  damage: number;
+  accuracy: number;
+  range: number;
+  fireRate: number;
+  mobility: number;
+  control: number;
+  // Detailed attributes for dynamic calculation (Percentage modifiers mostly or flat values)
+  adsSpeed: number;           // ms or %
+  adsSpread: number;          // % accuracy
+  adsMovementSpeed: number;   // %
+  hipFireAccuracy: number;    // %
+  sprintToFire: number;       // ms or %
+  verticalRecoil: number;     // % control
+  lateralRecoil: number;      // % stability
+  movementSpeed: number;      // %
+  flinchStability: number;    // %
+  bulletDensity: number;      // % (Shotguns)
+}
+
+export interface Attachment {
+  id: string;
+  name: string;
+  slot: keyof Attachments;
+  isUniversal: boolean;
+  compatibleWeapons?: string[]; // weapon slugs
+  compatibleCategories?: WeaponCategory[];
+  positiveEffects: string[];
+  negativeEffects: string[];
+  modifiers: Partial<WeaponStats>;
+  flags?: string[]; // 'silenced', 'hiddenFlash'
+}
+
 export interface WeaponVideo {
   id: string;
   url: string; // URL do mp4/webm
@@ -25,8 +60,9 @@ export interface Weapon {
   slug: string;
   category: WeaponCategory;
   imageUrl: string;
-  videos: WeaponVideo[]; // Nova estrutura de vídeos da arma
+  videos: WeaponVideo[];
   isActive: boolean;
+  baseStats?: Partial<WeaponStats>; // Opcional, se não houver usa o global da categoria
 }
 
 export interface Streamer {
