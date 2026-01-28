@@ -32,6 +32,8 @@ export interface WeaponStats {
   movementSpeed: number;      // %
   flinchStability: number;    // %
   bulletDensity: number;      // % (Shotguns)
+  lungRefresher: number;      // % (Snipers - hold breath duration)
+  aimDriftControl: number;    // % (Snipers - sway stability)
 }
 
 export interface Attachment {
