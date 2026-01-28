@@ -31,38 +31,38 @@ export const GUNSMITH_ATTACHMENTS: Attachment[] = [
     // --- MUZZLES (AK117 SPECIFIC) ---
     {
         id: 'ak117_muzzle_tactical', name: 'Tactical Suppressor', slot: 'muzzle', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['Silenced'], negativeEffects: ['ADS Speed'],
+        positiveEffects: ['Silenced'], negativeEffects: ['+5.0% ADS Time'],
         modifiers: { adsSpeed: -5 }, flags: ['silenced']
     },
     {
         id: 'ak117_muzzle_owc_light', name: 'OWC Light Suppressor', slot: 'muzzle', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['Silenced'], negativeEffects: ['Damage Range'],
+        positiveEffects: ['Silenced'], negativeEffects: ['-20.0% Damage Range'],
         modifiers: { range: -20 }, flags: ['silenced']
     },
     {
         id: 'ak117_muzzle_monolithic', name: 'Monolithic Suppressor', slot: 'muzzle', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['Silenced', 'Damage Range'], negativeEffects: ['ADS Bullet Spread', 'ADS Speed'],
-        modifiers: { range: 25, adsSpread: -7, adsSpeed: -12 }, flags: ['silenced']
+        positiveEffects: ['Silenced', '+25.0% Damage Range'], negativeEffects: ['+7.0% ADS Bullet Spread', '+12.0% ADS Time'],
+        modifiers: { range: 25, adsSpread: 7, adsSpeed: -12 }, flags: ['silenced']
     },
     {
         id: 'ak117_muzzle_light_compensator', name: 'OWC Light Compensator', slot: 'muzzle', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['Vertical Recoil Control', 'Lateral Recoil Stability'], negativeEffects: ['ADS Speed', 'ADS Bullet Spread'],
-        modifiers: { verticalRecoil: 11.1, lateralRecoil: 7, adsSpeed: -5, adsSpread: -8 }
+        positiveEffects: ['-11.1% Vertical Recoil', '-7.0% Horizontal Recoil'], negativeEffects: ['+5.0% ADS Time', '+8.0% ADS Bullet Spread'],
+        modifiers: { verticalRecoil: -11.1, lateralRecoil: -7, adsSpeed: -5, adsSpread: 8 }
     },
     {
         id: 'ak117_muzzle_flash_guard', name: 'MIP Light Flash Guard', slot: 'muzzle', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['Hidden Muzzle Flash', 'ADS Bullet Spread', 'Hipfire Bullet Spread'], negativeEffects: ['ADS Speed'],
-        modifiers: { adsSpread: 9.6, hipFireAccuracy: 7.8, adsSpeed: -5 }, flags: ['hiddenFlash']
+        positiveEffects: ['Hidden Muzzle Flash', '-9.6% ADS Bullet Spread', '-7.8% Hipfire Bullet Spread'], negativeEffects: ['+5.0% ADS Time'],
+        modifiers: { adsSpread: -9.6, hipFireAccuracy: -7.8, adsSpeed: -5 }, flags: ['hiddenFlash']
     },
     {
         id: 'ak117_muzzle_rtc_muzzle_brake', name: 'RTC Light Muzzle Brake', slot: 'muzzle', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['Lateral Recoil Stability', 'Vertical Recoil Control'], negativeEffects: ['ADS Speed', 'ADS Bullet Spread'],
-        modifiers: { lateralRecoil: 10.5, verticalRecoil: 7.8, adsSpeed: -5, adsSpread: -8 }
+        positiveEffects: ['-10.5% Horizontal Recoil', '-7.8% Vertical Recoil'], negativeEffects: ['+5.0% ADS Time', '+8.0% ADS Bullet Spread'],
+        modifiers: { lateralRecoil: -10.5, verticalRecoil: -7.8, adsSpeed: -5, adsSpread: 8 }
     },
     {
         id: 'ak117_muzzle_mip_muzzle_brake', name: 'MIP Light Muzzle Brake', slot: 'muzzle', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['Lateral Recoil Stability', 'ADS Bullet Spread'], negativeEffects: ['ADS Speed', 'Vertical Recoil'],
-        modifiers: { lateralRecoil: 18.1, adsSpread: 6.4, adsSpeed: -10, verticalRecoil: -6.4 }
+        positiveEffects: ['-18.1% Horizontal Recoil', '-6.4% ADS Bullet Spread'], negativeEffects: ['+10.0% ADS Time', '+6.4% Vertical Recoil'],
+        modifiers: { lateralRecoil: -18.1, adsSpread: -6.4, adsSpeed: -10, verticalRecoil: 6.4 }
     },
 
     // --- MUZZLES (DLQ33 SPECIFIC) ---
@@ -135,24 +135,24 @@ export const GUNSMITH_ATTACHMENTS: Attachment[] = [
     // --- BARRELS ---
     {
         id: 'ak117_barrel_light_short', name: 'MIP Light Barrel (Short)', slot: 'barrel', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['ADS Speed', 'Movement Speed', 'ADS Movement Speed'], negativeEffects: ['ADS Bullet Spread', 'Vertical Recoil'],
-        modifiers: { adsSpeed: 10, movementSpeed: 2, adsMovementSpeed: 2, adsSpread: -5, verticalRecoil: -10.7 }
+        positiveEffects: ['-10.0% ADS Time', '+2.0% Movement Speed', '+2.0% ADS Movement Speed'], negativeEffects: ['+5.0% ADS Bullet Spread', '+10.7% Vertical Recoil'],
+        modifiers: { adsSpeed: 10, movementSpeed: 2, adsMovementSpeed: 2, adsSpread: 5, verticalRecoil: 10.7 }
     },
     {
         id: 'ak117_barrel_extended_light', name: 'MIP Extended Light Barrel', slot: 'barrel', isUniversal: false, compatibleWeapons: ['ak117'],
         positiveEffects: ['ADS Bullet Spread', 'Damage Range', 'Lateral Recoil Stability'], negativeEffects: ['ADS Speed'],
-        modifiers: { adsSpread: 3.8, range: 20, lateralRecoil: 6, adsSpeed: -11 }
+        modifiers: { adsSpread: -3.8, range: 20, lateralRecoil: -6, adsSpeed: -11 }
     },
     {
         id: 'ak117_barrel_owc_marksman', name: 'OWC Marksman', slot: 'barrel', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['Damage Range', 'Lateral Recoil Stability', 'Vertical Recoil Control', 'ADS Bullet Spread'],
-        negativeEffects: ['Movement Speed', 'ADS Movement Speed', 'ADS Speed'],
-        modifiers: { range: 35, lateralRecoil: 10.8, verticalRecoil: 15.7, adsSpread: 8.8, movementSpeed: -3, adsMovementSpeed: -15, adsSpeed: -17 }
+        positiveEffects: ['-8.8% ADS Bullet Spread', '+35.0% Damage Range', '-10.8% Horizontal Recoil', '-15.7% Vertical Recoil'],
+        negativeEffects: ['-3.0% Movement Speed', '-15.0% ADS Movement Speed', '+17.0% ADS Time'],
+        modifiers: { adsSpread: -8.8, range: 35, lateralRecoil: -10.8, verticalRecoil: -15.7, movementSpeed: -3, adsMovementSpeed: -15, adsSpeed: -17 }
     },
     {
         id: 'ak117_barrel_ykm_integral', name: 'YKM Integral Suppressor', slot: 'barrel', isUniversal: false, compatibleWeapons: ['ak117'],
         positiveEffects: ['Silenced', 'ADS Bullet Spread'], negativeEffects: ['ADS Speed'],
-        modifiers: { adsSpread: 9.2, adsSpeed: -5 }, flags: ['silenced']
+        modifiers: { adsSpread: -9.2, adsSpeed: -5 }, flags: ['silenced']
     },
 
     // --- BARRELS (HS0405 SPECIFIC) ---
@@ -189,8 +189,28 @@ export const GUNSMITH_ATTACHMENTS: Attachment[] = [
     },
 
     // --- OPTICS (COMMON UNIVERSAL) ---
-    { id: 'common_red_dot', name: 'Classic Red Dot Sight', slot: 'optic', isUniversal: true, positiveEffects: ['Precision Sight'], negativeEffects: ['ADS Speed'], modifiers: { adsSpeed: -2 } },
-    { id: 'common_tactical_scope', name: 'Tactical Scope (Common)', slot: 'optic', isUniversal: true, positiveEffects: ['Zoom'], negativeEffects: ['ADS Speed'], modifiers: { adsSpeed: -5 } },
+    { id: 'common_red_dot', name: 'Classic Red Dot Sight', slot: 'optic', isUniversal: true, positiveEffects: ['Zoom'], negativeEffects: [], modifiers: {} },
+    { id: 'common_tactical_scope', name: 'Tactical Scope (Common)', slot: 'optic', isUniversal: true, positiveEffects: ['Zoom'], negativeEffects: ['+7.0% ADS Time'], modifiers: { adsSpeed: -7 } },
+
+    // --- OPTICS (AK117 ADDITIONAL) ---
+    { id: 'ak117_optic_rds1', name: 'Red Dot Sight 1', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: ['Zoom'], negativeEffects: [], modifiers: {} },
+    { id: 'ak117_optic_rds2', name: 'Red Dot Sight 2', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: ['Zoom'], negativeEffects: [], modifiers: {} },
+    { id: 'ak117_optic_o3d', name: 'Optic-3D', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: [], negativeEffects: ['+X% ADS Time'], modifiers: { adsSpeed: -2 } },
+    { id: 'ak117_optic_o3e', name: 'Optic-3E', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: [], negativeEffects: ['+X% ADS Time'], modifiers: { adsSpeed: -2 } },
+    { id: 'ak117_optic_o3f', name: 'Optic-3F', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: [], negativeEffects: ['+X% ADS Time'], modifiers: { adsSpeed: -2 } },
+    { id: 'ak117_optic_o3g', name: 'Optic-3G', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: [], negativeEffects: ['+X% ADS Time'], modifiers: { adsSpeed: -2 } },
+    { id: 'ak117_optic_o3h', name: 'Optic-3H', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: [], negativeEffects: ['+X% ADS Time'], modifiers: { adsSpeed: -2 } },
+    { id: 'ak117_optic_o3i', name: 'Optic-3I', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: [], negativeEffects: ['+X% ADS Time'], modifiers: { adsSpeed: -2 } },
+    { id: 'ak117_optic_o3j', name: 'Optic-3J (Holographic Sight 2)', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: [], negativeEffects: ['+X% ADS Time'], modifiers: { adsSpeed: -3 } },
+    { id: 'ak117_optic_o3k', name: 'Optic-3K (Holographic Sight 3)', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: [], negativeEffects: ['+X% ADS Time'], modifiers: { adsSpeed: -3 } },
+    { id: 'ak117_optic_tac_scope', name: 'Tactical Scope', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: [], negativeEffects: ['+7.0% ADS Time'], modifiers: { adsSpeed: -7 } },
+    { id: 'ak117_optic_3x_tac_1', name: '3X Tactical Scope 1', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: [], negativeEffects: ['+8.0% ADS Time'], modifiers: { adsSpeed: -8 } },
+    { id: 'ak117_optic_3x_tac_2', name: '3X Tactical Scope 2', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: [], negativeEffects: ['+8.0% ADS Time'], modifiers: { adsSpeed: -8 } },
+    { id: 'ak117_optic_3x_tac_3', name: '3X Tactical Scope 3', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: [], negativeEffects: ['+8.0% ADS Time'], modifiers: { adsSpeed: -8 } },
+    { id: 'ak117_optic_o3p', name: 'Optic-3P', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: [], negativeEffects: ['+10.0% ADS Time'], modifiers: { adsSpeed: -10 } },
+    { id: 'ak117_optic_4_4x_owc', name: 'OWC 4.4X Tactical Scope', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: [], negativeEffects: ['+10.0% ADS Time'], modifiers: { adsSpeed: -10 } },
+    { id: 'ak117_optic_4_4x_rtc', name: 'RTC 4.4X Tactical Scope', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: [], negativeEffects: ['+10.0% ADS Time'], modifiers: { adsSpeed: -10 } },
+    { id: 'ak117_optic_o3r', name: 'Optic-3R', slot: 'optic', isUniversal: false, compatibleWeapons: ['ak117'], positiveEffects: [], negativeEffects: ['+X% ADS Time'], modifiers: { adsSpeed: -12 } },
 
     // --- OPTICS (HS0405 SPECIFIC) ---
     { id: 'hs0405_optic_rds', name: 'Classic Red Dot Sight', slot: 'optic', isUniversal: false, compatibleWeapons: ['hs0405'], positiveEffects: ['Zoom'], negativeEffects: ['ADS Speed'], modifiers: { adsSpeed: -3 } },
@@ -285,27 +305,28 @@ export const GUNSMITH_ATTACHMENTS: Attachment[] = [
 
     // --- STOCKS (AK117 SPECIFIC) ---
     {
-        id: 'ak117_stock_4a', name: 'Stock-4A', slot: 'stock', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['Movement Speed', 'ADS Movement Speed'],
-        negativeEffects: ['ADS Speed', 'ADS Bullet Spread', 'Hit Flinch', 'Vertical Recoil'],
-        modifiers: { movementSpeed: 3, adsMovementSpeed: 10, adsSpeed: -14, adsSpread: -9.6, flinchStability: -8, verticalRecoil: -10.8 }
+        id: 'ak117_stock_4a', name: 'RTC Steady Stock', slot: 'stock', isUniversal: false, compatibleWeapons: ['ak117'],
+        positiveEffects: ['-8.2% ADS Bullet Spread', '-12.0% Hit Flinch'],
+        negativeEffects: ['+7.0% ADS Time', '-10.0% ADS Movement Speed'],
+        modifiers: { adsSpread: -8.2, flinchStability: 12, adsSpeed: -7, adsMovementSpeed: -10, lateralRecoil: -3.2 }
     },
     {
-        id: 'ak117_stock_4b', name: 'Stock-4B', slot: 'stock', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['ADS Movement Speed'], negativeEffects: ['ADS Bullet Spread', 'Lateral Recoil', 'Vertical Recoil'],
-        modifiers: { adsMovementSpeed: 20, adsSpread: -8, lateralRecoil: -1.8, verticalRecoil: -1.8 }
+        id: 'ak117_stock_4b', name: 'No Stock', slot: 'stock', isUniversal: false, compatibleWeapons: ['ak117'],
+        positiveEffects: ['-14.0% ADS Time', '+3.0% Movement Speed', '+10.0% ADS Movement Speed'],
+        negativeEffects: ['+9.6% ADS Bullet Spread', '+8.0% Hit Flinch', '+10.8% Vertical Recoil'],
+        modifiers: { adsSpeed: 14, movementSpeed: 3, adsMovementSpeed: 10, adsSpread: 9.6, flinchStability: -8, verticalRecoil: 10.8 }
     },
     {
-        id: 'ak117_stock_4c', name: 'Stock-4C', slot: 'stock', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['ADS Movement Speed', 'Flinch Stability'],
-        negativeEffects: ['ADS Speed', 'Lateral Recoil', 'Vertical Recoil'],
-        modifiers: { adsMovementSpeed: 15, flinchStability: 5, adsSpeed: -8, lateralRecoil: -1.8, verticalRecoil: -1.8 }
+        id: 'ak117_stock_4c', name: 'YKM Light Stock', slot: 'stock', isUniversal: false, compatibleWeapons: ['ak117'],
+        positiveEffects: ['+20.0% ADS Movement Speed'],
+        negativeEffects: ['+8.0% ADS Bullet Spread', '+1.8% Horizontal Recoil', '+1.8% Vertical Recoil'],
+        modifiers: { adsMovementSpeed: 20, adsSpread: 8, lateralRecoil: 1.8, verticalRecoil: 1.8 }
     },
     {
-        id: 'ak117_stock_4d', name: 'Stock-4D', slot: 'stock', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['ADS Speed'],
-        negativeEffects: ['ADS Bullet Spread', 'Hit Flinch', 'Lateral Recoil Stability', 'ADS Movement Speed'],
-        modifiers: { adsSpeed: 7, adsSpread: -8.2, flinchStability: -12, lateralRecoil: -3.2, adsMovementSpeed: -10 }
+        id: 'ak117_stock_4d', name: 'OWC Skeleton Stock', slot: 'stock', isUniversal: false, compatibleWeapons: ['ak117'],
+        positiveEffects: ['+15.0% ADS Movement Speed', '-8.0% ADS Time'],
+        negativeEffects: [],
+        modifiers: { adsMovementSpeed: 15, adsSpeed: 8 }
     },
 
     // --- STOCKS (HS0405 SPECIFIC) ---
@@ -324,8 +345,18 @@ export const GUNSMITH_ATTACHMENTS: Attachment[] = [
     // --- LASERS (AK117 SPECIFIC) ---
     {
         id: 'ak117_laser_owc_tactical', name: 'OWC Laser – Tactical', slot: 'laser', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['ADS Speed', 'ADS Bullet Spread'], negativeEffects: ['Laser Visible while ADS'],
-        modifiers: { accuracy: 2, mobility: 3, adsSpeed: 8, adsSpread: 9.2 }
+        positiveEffects: ['-8.0% ADS Time', '-9.2% ADS Bullet Spread'], negativeEffects: ['Visible Laser Sights'],
+        modifiers: { adsSpeed: 8, adsSpread: -9.2 }
+    },
+    {
+        id: 'ak117_laser_rtc_1mw', name: 'RTC Laser 1mW', slot: 'laser', isUniversal: false, compatibleWeapons: ['ak117'],
+        positiveEffects: [], negativeEffects: ['+8.0% Hipfire Bullet Spread'],
+        modifiers: { hipFireAccuracy: 8 }
+    },
+    {
+        id: 'ak117_laser_mip_5mw', name: 'MIP Laser 5mW', slot: 'laser', isUniversal: false, compatibleWeapons: ['ak117'],
+        positiveEffects: ['-17.0% Hipfire Bullet Spread', '-25.0% Sprint-to-Fire Delay'], negativeEffects: ['Visible Laser Sights'],
+        modifiers: { hipFireAccuracy: -17, sprintToFire: 25 }
     },
 
     // --- STOCKS (DLQ33 SPECIFIC) ---
@@ -403,43 +434,55 @@ export const GUNSMITH_ATTACHMENTS: Attachment[] = [
         modifiers: { adsSpeed: 8, adsSpread: -15 }
     },
 
-    // --- UNDERBARRELS ---
+    // --- UNDERBARRELS (AK117 SPECIFIC) ---
     {
-        id: 'strike_foregrip', name: 'Strike Foregrip', slot: 'underbarrel', isUniversal: true,
-        positiveEffects: ['Vertical Recoil Control', 'ADS Bullet Spread'], negativeEffects: ['Movement Speed', 'ADS Movement Speed'],
-        modifiers: { accuracy: 1, control: 4, mobility: -3, verticalRecoil: 7.6, adsSpread: 4.4, movementSpeed: -1, adsMovementSpeed: -5 }
+        id: 'ak117_underbarrel_strike', name: 'Strike Foregrip', slot: 'underbarrel', isUniversal: false, compatibleWeapons: ['ak117'],
+        positiveEffects: ['-7.6% Vertical Recoil', '-4.4% ADS Bullet Spread'], negativeEffects: ['-1.0% Movement Speed', '-15.0% ADS Movement Speed'],
+        modifiers: { verticalRecoil: -7.6, adsSpread: -4.4, movementSpeed: -1, adsMovementSpeed: -15 }
     },
     {
-        id: 'merc_foregrip', name: 'Merc Foregrip', slot: 'underbarrel', isUniversal: true,
-        positiveEffects: ['Vertical Recoil Control', 'Hipfire Bullet Spread'], negativeEffects: ['ADS Movement Speed', 'ADS Speed'],
-        modifiers: { verticalRecoil: 8.9, hipFireAccuracy: 11.2, adsMovementSpeed: -10, adsSpeed: -10 }
+        id: 'ak117_underbarrel_merc', name: 'Merc Foregrip', slot: 'underbarrel', isUniversal: false, compatibleWeapons: ['ak117'],
+        positiveEffects: ['-8.9% Vertical Recoil', '-11.2% Hipfire Bullet Spread'], negativeEffects: ['-10.0% ADS Movement Speed', '+10.0% ADS Time'],
+        modifiers: { verticalRecoil: -8.9, hipFireAccuracy: -11.2, adsMovementSpeed: -10, adsSpeed: -10 }
     },
     {
-        id: 'operator_foregrip', name: 'Operator Foregrip', slot: 'underbarrel', isUniversal: true,
-        positiveEffects: ['Vertical Recoil Control'], negativeEffects: ['ADS Bullet Spread', 'ADS Speed'],
-        modifiers: { verticalRecoil: 13.9, adsSpread: -8, adsSpeed: -15 }
+        id: 'ak117_underbarrel_operator', name: 'Operator Foregrip', slot: 'underbarrel', isUniversal: false, compatibleWeapons: ['ak117'],
+        positiveEffects: [], negativeEffects: ['+3.9% Vertical Recoil', '+8.0% ADS Time'],
+        modifiers: { verticalRecoil: 3.9, adsSpeed: -8 }
     },
     {
-        id: 'ranger_foregrip', name: 'Ranger Foregrip', slot: 'underbarrel', isUniversal: true,
-        positiveEffects: ['Vertical Recoil Control', 'ADS Bullet Spread', 'Lateral Recoil Stability'], negativeEffects: ['ADS Movement Speed'],
-        modifiers: { verticalRecoil: 12.9, adsSpread: 12.2, lateralRecoil: 3.7, adsMovementSpeed: -10 }
+        id: 'ak117_underbarrel_ranger', name: 'Ranger Foregrip', slot: 'underbarrel', isUniversal: false, compatibleWeapons: ['ak117'],
+        positiveEffects: ['-12.9% Vertical Recoil', '-12.2% ADS Bullet Spread', '-3.7% Horizontal Recoil'], negativeEffects: ['-10.0% ADS Movement Speed', '+15.0% ADS Time'],
+        modifiers: { verticalRecoil: -12.9, adsSpread: -12.2, lateralRecoil: -3.7, adsMovementSpeed: -10, adsSpeed: -15 }
     },
     {
-        id: 'tactical_foregrip_a', name: 'Tactical Foregrip A', slot: 'underbarrel', isUniversal: true,
-        positiveEffects: ['ADS Bullet Spread'], negativeEffects: ['Movement Speed', 'ADS Movement Speed'],
-        modifiers: { adsSpread: 10, movementSpeed: -1, adsMovementSpeed: -5 }
+        id: 'ak117_underbarrel_tac_a', name: 'Tactical Foregrip A', slot: 'underbarrel', isUniversal: false, compatibleWeapons: ['ak117'],
+        positiveEffects: ['-10.0% ADS Bullet Spread'], negativeEffects: ['-1.0% Movement Speed', '-5.0% ADS Movement Speed'],
+        modifiers: { adsSpread: -10, movementSpeed: -1, adsMovementSpeed: -5 }
     },
     {
-        id: 'tactical_foregrip_b', name: 'Tactical Foregrip B', slot: 'underbarrel', isUniversal: true,
-        positiveEffects: ['ADS Bullet Spread', 'Lateral Recoil Stability'], negativeEffects: ['ADS Speed', 'ADS Movement Speed'],
-        modifiers: { adsSpread: 5.2, lateralRecoil: 13.2, adsSpeed: -8, adsMovementSpeed: -5 }
+        id: 'ak117_underbarrel_tac_b', name: 'Tactical Foregrip B', slot: 'underbarrel', isUniversal: false, compatibleWeapons: ['ak117'],
+        positiveEffects: ['-5.2% ADS Bullet Spread', '-13.2% Horizontal Recoil'], negativeEffects: ['+8.0% ADS Time', '-5.0% ADS Movement Speed'],
+        modifiers: { adsSpread: -5.2, lateralRecoil: -13.2, adsSpeed: -8, adsMovementSpeed: -5 }
     },
+
+    // --- UNDERBARRELS (GENERAL) ---
 
     // --- REAR GRIPS (AK117 SPECIFIC) ---
     {
         id: 'ak117_grip_granulated', name: 'Granulated Grip Tape', slot: 'rear_grip', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['ADS Bullet Spread'], negativeEffects: ['ADS Movement Speed'],
-        modifiers: { adsSpread: 11.6, adsMovementSpeed: -4 }
+        positiveEffects: ['-11.6% ADS Bullet Spread'], negativeEffects: ['-4.0% ADS Movement Speed'],
+        modifiers: { adsSpread: -11.6, adsMovementSpeed: -4 }
+    },
+    {
+        id: 'ak117_grip_rubberized', name: 'Rubberized Grip Tape', slot: 'rear_grip', isUniversal: false, compatibleWeapons: ['ak117'],
+        positiveEffects: ['-13.2% Vertical Recoil'], negativeEffects: ['+9.2% ADS Bullet Spread'],
+        modifiers: { verticalRecoil: -13.2, adsSpread: 9.2 }
+    },
+    {
+        id: 'ak117_grip_stippled', name: 'Stippled Grip Tape', slot: 'rear_grip', isUniversal: false, compatibleWeapons: ['ak117'],
+        positiveEffects: ['-5.0% ADS Time', '-15.0% Sprint-to-Fire Delay'], negativeEffects: ['+12.0% ADS Bullet Spread', '+3.2% Horizontal Recoil', '+3.2% Vertical Recoil'],
+        modifiers: { adsSpeed: 5, sprintToFire: 15, adsSpread: 12, lateralRecoil: 3.2, verticalRecoil: 3.2 }
     },
 
     // --- REAR GRIPS (DLQ33 SPECIFIC) ---
@@ -470,17 +513,17 @@ export const GUNSMITH_ATTACHMENTS: Attachment[] = [
     {
         id: 'ak117_ammo_power_mag', name: 'Stopping Power Mag', slot: 'ammo', isUniversal: false, compatibleWeapons: ['ak117'],
         positiveEffects: ['Damage', 'Damage Range'], negativeEffects: ['Vertical Recoil Control', 'ADS Speed'],
-        modifiers: { damage: 15, range: 10, verticalRecoil: -10, adsSpeed: -8 }
+        modifiers: { damage: 15, range: 10, verticalRecoil: 10, adsSpeed: -8 }
     },
     {
         id: 'ak117_ammo_ext_40', name: '40 Round Extended Mag', slot: 'ammo', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['Magazine Capacity'], negativeEffects: ['Movement Speed', 'Reload Speed'],
-        modifiers: { movementSpeed: -1 }
+        positiveEffects: ['+10 Magazine Capacity'], negativeEffects: ['+3.0% Reload Time'],
+        modifiers: { adsSpeed: -1 }
     },
     {
         id: 'ak117_ammo_ext_48', name: '48 Round Extended Mag', slot: 'ammo', isUniversal: false, compatibleWeapons: ['ak117'],
-        positiveEffects: ['Magazine Capacity'], negativeEffects: ['Movement Speed', 'Reload Speed', 'ADS Speed'],
-        modifiers: { movementSpeed: -2, adsSpeed: -3 }
+        positiveEffects: ['+18 Magazine Capacity'], negativeEffects: ['-1.0% Movement Speed', '+7.0% Reload Time', '+3.5% ADS Time'],
+        modifiers: { movementSpeed: -1, adsSpeed: -3.5 }
     },
 
     // --- AMMO (HS0405 SPECIFIC) ---
