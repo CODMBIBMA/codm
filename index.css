@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #0b0f15;
+    color: #e2e8f0;
+    background-image: 
+      linear-gradient(rgba(11, 15, 21, 0.95), rgba(11, 15, 21, 0.95)),
+      repeating-linear-gradient(45deg, #151b24 0, #151b24 1px, transparent 0, transparent 50%);
+    background-size: 20px 20px;
+  }
+}
+
+/* Scrollbar estilo militar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0f15; 
+}
+::-webkit-scrollbar-thumb {
+  background: #334155; 
+  border: 1px solid #0b0f15;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #fbbf24; 
+}
+
+/* Utilitários de UI do CODM */
+.skew-btn {
+  transform: skewX(-15deg);
+}
+.skew-content {
+  transform: skewX(15deg);
+}
+
+.codm-panel {
+  background: linear-gradient(180deg, rgba(21, 27, 36, 0.9) 0%, rgba(11, 15, 21, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+.text-stroke {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+}
+
+.clip-angled-box {
+  clip-path: polygon(
+    0 0, 
+    100% 0, 
+    100% calc(100% - 10px), 
+    calc(100% - 10px) 100%, 
+    0 100%
+  );
+}
