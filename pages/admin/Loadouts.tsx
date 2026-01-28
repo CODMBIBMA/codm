@@ -385,5 +385,3 @@ const AdminLoadouts = () => {
 };
 
 export default AdminLoadouts;
-
-export default AdminLoadouts;
